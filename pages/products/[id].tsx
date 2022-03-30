@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { ParsedUrlQuery } from 'querystring';
 import Title from '../../components/Title';
 import { getProduct, getProducts, Product } from '../../lib/products';
+import { ApiError } from '../../lib/api';
 
 interface ProductPageParams extends ParsedUrlQuery {
   id: string;
@@ -31,10 +32,13 @@ export const getStaticProps: GetStaticProps<
 
     return {
       props: { product },
-      revalidate: 30,
+      revalidate: parseInt(process.env.REVALIDATE_SECONDS), // seconds
     };
   } catch (err) {
-    return { notFound: true };
+    if (err instanceof ApiError && err.status === 404) {
+      return { notFound: true };
+    }
+    throw err;
   }
 };
 
