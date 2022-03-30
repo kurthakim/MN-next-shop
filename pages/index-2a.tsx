@@ -1,13 +1,18 @@
+// Option 2a: fetch products on the client side (in useEffect)
+// directly from an external API
 import Head from 'next/head';
 import Title from '../components/Title';
+import { useEffect, useState } from 'react';
 
-const products = [
-  { id: 1, title: 'First Product' },
-  { id: 2, title: 'Second Product' },
-];
+import { getProducts, Product } from '../lib/products';
 
 const HomePage: React.FC = () => {
-  console.log('🚀 ~ file: index.tsx ~ line 8 ~ products', products);
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    getProducts().then(setProducts);
+    console.log('🚀 ~ file: index-2.tsx ~ line 10 ~ products', products);
+  }, []);
 
   return (
     <>
