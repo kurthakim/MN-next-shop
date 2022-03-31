@@ -6,6 +6,8 @@ export interface Product {
   id: number;
   title: string;
   description: string;
+  price: string;
+  pictureUrl: string;
 }
 
 export async function getProduct(id: string): Promise<Product> {
@@ -23,5 +25,7 @@ function stripProduct(product: any): Product {
     id: product.id,
     title: product.title,
     description: product.description,
+    price: '$' + product.price.toFixed(2),
+    pictureUrl: CMS_URL + product.picture.url,
   };
 }
