@@ -1,9 +1,7 @@
 // Option 1b: fetch products on the server side (in getStaticProps)
 // but with Incremental Static Regeneration(in getStaticProps)
 import { GetStaticProps } from 'next';
-import Head from 'next/head';
-import Link from 'next/link';
-import Title from '../components/Title';
+import Page from '../components/Page';
 import { getProducts, Product } from '../lib/products';
 import ProductCard from '../components/ProductCard';
 
@@ -26,22 +24,16 @@ const HomePage: React.FC<HomePageProps> = ({ products }) => {
   console.log('🚀 ~ file: index.tsx ~ line 8 ~ products', products);
 
   return (
-    <>
-      <Head>
-        <title>Next Shop</title>
-      </Head>
-      <main className="px-6 py-4">
-        <Title>Next Shop</Title>
-        <ul className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          {products.map((product) => (
-            <li key={product.id}>
-              <ProductCard product={product} />
-            </li>
-          ))}
-        </ul>
-      </main>
-    </>
+    <Page title="Indoor Plants">
+      <ul className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        {products.map((product) => (
+          <li key={product.id}>
+            <ProductCard product={product} />
+          </li>
+        ))}
+      </ul>
+    </Page>
   );
 };
-// grid grid-cols-1 lg:grid-cols-3 gap-4
+
 export default HomePage;
