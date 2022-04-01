@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { FormEventHandler, useState } from 'react';
 import Button from '../components/Button';
 import Field from '../components/Field';
@@ -6,6 +7,7 @@ import Page from '../components/Page';
 import { fetchJson } from '../lib/api';
 
 const SignInPage: React.FC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [status, setStatus] = useState({ loading: false, error: false });
@@ -14,16 +16,17 @@ const SignInPage: React.FC = () => {
     event.preventDefault();
     setStatus({ loading: true, error: false });
     try {
-      const response = await fetchJson('http://localhost:1337/auth/local', {
+      const response = await fetchJson('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ identifier: email, password }),
+        body: JSON.stringify({ email, password }),
       });
       setStatus({ loading: false, error: false });
       console.log(
         '🚀 ~ file: sign-in.tsx ~ line 20 ~ consthandleSubmit:FormEventHandler<HTMLFormElement>= ~ response',
         response
       );
+      router.push('/');
     } catch (err) {
       setStatus({ loading: false, error: true });
     }
