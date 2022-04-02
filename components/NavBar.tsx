@@ -18,6 +18,11 @@ const NavBar: React.FC = () => {
         <>
           {user ? (
             <>
+              <li>
+                <Link href="/cart">
+                  <a>Cart</a>
+                </Link>
+              </li>
               <li>{user.name}</li>
               <li>
                 <button onClick={signOut}>Sign Out</button>
